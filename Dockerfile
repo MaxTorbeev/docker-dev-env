@@ -1,10 +1,7 @@
-ARG PHP_VERSION=7.4
+ARG PHP_VERSION=7.3
 ARG APCU_VERSION=5.1.19
 
-FROM php:7.4-fpm
-
-# clean docker system
-#RUN docker system prune -a
+FROM php:${PHP_VERSION}-fpm
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
@@ -25,7 +22,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
     unzip \
     libzip-dev \
     zip \
-    curl
+    curl \
+    openssh-client \
+    supervisor
 
 # Install extensions
 
@@ -34,7 +33,7 @@ RUN pecl install mcrypt-1.0.3
 RUN docker-php-ext-enable mcrypt
 
 # configure, install and enable all php packages
-RUN docker-php-ext-configure gd --enable-gd --with-freetype --with-jpeg --with-webp
+RUN docker-php-ext-configure gd --with-gd --with-webp-dir --with-jpeg-dir --with-png-dir --with-zlib-dir
 RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
 RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd
 RUN docker-php-ext-configure intl
@@ -47,6 +46,7 @@ RUN docker-php-ext-install -j$(nproc) pdo
 RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install -j$(nproc) zip
+RUN docker-php-ext-install -j$(nproc) soap
 
 # install xdebug
 RUN pecl install xdebug
