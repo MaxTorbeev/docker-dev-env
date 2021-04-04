@@ -1,4 +1,4 @@
-mysql:
-	docker exec -it app db
+db:
+	docker exec -it db bash
 php:
-	docker exec -it app bash
+	docker exec -it devtool_php bash
