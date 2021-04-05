@@ -53,6 +53,7 @@ services:
       - ${DB_LOCAL_PORT}:3306
     volumes:
       - ./services/database/dump:/var/lib/mysql
+      - ./docker/mysql/:/etc/mysql/conf.d
     networks:
       - app-network
 
