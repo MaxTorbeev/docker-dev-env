@@ -9,6 +9,8 @@ services:
     container_name: ${PROJECT_NAME}_php
     restart: unless-stopped
     tty: true
+    ports:
+      - 6001:6001 # Websocket port
     environment:
       COMPOSER_MEMORY_LIMIT: 2G
       XDEBUG_CONFIG: client_host=${XDEBUG_REMOTE_HOST} client_port=${XDEBUG_STORM_PORT} remote_enable=1
@@ -55,7 +57,8 @@ services:
       - ./services/database/dump:/var/lib/mysql
       - ./docker/mysql/:/etc/mysql/conf.d
     networks:
-      - app-network
+      app-network:
+        ipv4_address: ${DB_REMOTE_HOST}
 
 #Docker Networks
 networks:

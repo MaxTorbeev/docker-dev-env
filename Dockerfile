@@ -98,6 +98,15 @@ RUN set -eux; \
 # clean image
 RUN apt-get clean
 
+#ENTRYPOINT ["/usr/local/bin/php", "/var/www/apps/b2b/artisan", "websockets:serve"]
+
+COPY docker/supervisord/websockets.conf /etc/supervisor/conf.d/websockets.conf
+
+# ENTRYPOINT ["/usr/bin/supervisord"] does not work.
+# --> "Error: positional arguments are not supported"
+# http://stackoverflow.com/questions/22465003/error-positional-arguments-are-not-supported
+CMD ["/usr/bin/supervisord"]
+
 ## Expose port 9000 and start php-fpm server
 EXPOSE 9000
 CMD ["php-fpm"]
