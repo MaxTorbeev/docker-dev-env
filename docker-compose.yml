@@ -35,6 +35,7 @@ services:
     volumes:
       - ./:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./docker/nginx/ssl/:/etc/nginx/ssl/
     networks:
       - app-network
     depends_on:

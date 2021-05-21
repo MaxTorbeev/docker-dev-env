@@ -1,6 +1,7 @@
 .env
 .idea
 docker/mysql/data
+docker/nginx/ssl
 apps
 services
 .DS_Store

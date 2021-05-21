@@ -51,17 +51,17 @@ RUN docker-php-ext-install -j$(nproc) zip
 RUN docker-php-ext-install -j$(nproc) soap
 
 # install xdebug
-RUN pecl install xdebug
-RUN docker-php-ext-enable xdebug
+#RUN pecl install xdebug
+#RUN docker-php-ext-enable xdebug
 
-RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_autostart=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.default_enable=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.profiler_enable=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
-RUN echo "xdebug.remote_log=\"/tmp/xdebug.log\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.remote_autostart=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.default_enable=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.remote_host=host.docker.internal" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.remote_port=9000" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.remote_connect_back=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.profiler_enable=0" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+#RUN echo "xdebug.remote_log=\"/tmp/xdebug.log\"" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
 
 # configure opcache
 RUN echo "opcache.memory_consumption=128" >> /usr/local/etc/php/conf.d/opcache-recommended.ini
@@ -102,11 +102,12 @@ RUN apt-get clean
 
 COPY docker/supervisord/websockets.conf /etc/supervisor/conf.d/websockets.conf
 
+## Expose port 9000 and start php-fpm server
+#EXPOSE 9000
+
+CMD ["php-fpm"]
+
 # ENTRYPOINT ["/usr/bin/supervisord"] does not work.
 # --> "Error: positional arguments are not supported"
 # http://stackoverflow.com/questions/22465003/error-positional-arguments-are-not-supported
-CMD ["/usr/bin/supervisord"]
-
-## Expose port 9000 and start php-fpm server
-EXPOSE 9000
-CMD ["php-fpm"]
+#CMD ["/usr/bin/supervisord"]
