@@ -17,6 +17,7 @@
 # clean docker system
 
 - docker system prune -a
+- docker network prune
 
 # Inspect processes
 

@@ -11,6 +11,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends apt-utils \
     libmcrypt-dev \
     libpng-dev \
     libwebp-dev \
+    libjpeg-dev \
     libcurl4 \
     libcurl4-openssl-dev \
     zlib1g-dev \
@@ -35,11 +36,19 @@ RUN pecl install mcrypt-1.0.3
 RUN docker-php-ext-enable mcrypt
 
 # configure, install and enable all php packages
-RUN docker-php-ext-configure gd --with-gd --with-webp-dir --with-jpeg-dir --with-png-dir --with-zlib-dir
+RUN docker-php-ext-configure gd
+#--with-gd \
+#                                --with-jpeg-dir \
+#                                --with-png-dir \
+#                                --with-webp-dir \
+#                                --with-png-dir \
+#                                --with-zlib-dir
+
 RUN docker-php-ext-configure pdo_mysql --with-pdo-mysql=mysqlnd
 RUN docker-php-ext-configure mysqli --with-mysqli=mysqlnd
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure zip
+RUN docker-php-ext-configure bcmath
 
 RUN docker-php-ext-install -j$(nproc) opcache
 RUN docker-php-ext-install -j$(nproc) pdo_mysql
@@ -49,6 +58,7 @@ RUN docker-php-ext-install -j$(nproc) gd
 RUN docker-php-ext-install -j$(nproc) intl
 RUN docker-php-ext-install -j$(nproc) zip
 RUN docker-php-ext-install -j$(nproc) soap
+RUN docker-php-ext-install -j$(nproc) bcmath
 
 # install xdebug
 #RUN pecl install xdebug
