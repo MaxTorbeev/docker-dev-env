@@ -11,8 +11,8 @@
 
 !! Warning
 
-- docker stop $(docker ps -a -q) - stop processes && docker rm $(docker ps -a -q)
-- docker rm $(docker ps -a -q)
+* docker stop $(docker ps -a -q) - stop processes && docker rm $(docker ps -a -q)
+* docker rm $(docker ps -a -q)
 
 # clean docker system
 
