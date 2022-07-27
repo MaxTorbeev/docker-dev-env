@@ -2,6 +2,7 @@
 .idea
 docker/mysql/data
 docker/nginx/ssl
-apps
+apps/*
+!apps/.gitkeep
 services
 .DS_Store
